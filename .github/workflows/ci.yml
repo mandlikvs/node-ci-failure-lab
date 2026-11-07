@@ -1,0 +1,30 @@
+name: Node CI Failure Lab
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Install from committed lockfile
+        run: npm ci --ignore-scripts
+      - name: Check build assumptions
+        run: npm run preflight
+      - name: Check syntax
+        run: npm run check
+      - name: Run Node native tests
+        run: npm test

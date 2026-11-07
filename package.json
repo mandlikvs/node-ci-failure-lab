@@ -1,0 +1,14 @@
+{
+  "name": "node-ci-failure-lab",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Self-contained Node.js CI debugging labs; no third-party runtime dependencies",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check src/config.mjs && node --check src/money.mjs && node --check src/retry.mjs && node --check src/paths.mjs && node --check src/time.mjs && node --check src/server.mjs",
+    "preflight": "node scripts/preflight.mjs",
+    "start": "node src/server.mjs"
+  }
+}
