@@ -1,43 +1,45 @@
 # Node CI Failure Lab — companion source
 
-A dependency-free Node.js demonstration repository for seven test and CI troubleshooting labs. The examples use the built-in `node:test` runner and a small local HTTP server. No paid cloud account is required.
+**Author:** Vishal Mandlik  
+**Book:** *Node CI Failure Lab: 7 Hands-On Fixes*  
+**Project:** Self-contained Node.js debugging and CI exercises
 
-**Status:** code is reviewed locally; a first hosted GitHub Actions run is still required. This repository contains source code and exercises, not the book manuscript.
+This is the optional runnable companion project for the Kindle workbook. The full book manuscript is **not** stored in this repository.
 
 ## Requirements
 
 - Node.js 22 or newer
-- npm
-- Optional GitHub account to run the included Actions workflow
+- npm (included with Node)
+- A terminal; GitHub Actions runs automatically on pushes to `main`
 
-## Verify
+## Run the lab
 
 ```bash
+git clone https://github.com/mandlikvs/node-ci-failure-lab.git
+cd node-ci-failure-lab
 npm ci --ignore-scripts
 npm run preflight
 npm run check
 npm test
 ```
 
-The currently maintained tests check configuration, integer-cent arithmetic, retry behavior, lexical paths, explicit timezone handling, HTTP liveness/readiness and a small JSON route.
+Run the local demo server with `npm start`, then open [http://127.0.0.1:3000/health](http://127.0.0.1:3000/health). Stop the server using Ctrl+C.
 
-## Run locally
+The examples use `node:test`, native HTTP, deterministic retry tests, integer-cent arithmetic, explicit timezone parsing and safe configuration checks. No paid cloud resources or external runtime dependencies are needed.
 
-```bash
-npm start
-```
+## CI status
 
-Then open `http://127.0.0.1:3000/health`. The `/estimate` example is an unauthenticated teaching endpoint and is **not** a production-ready billing service. Do not deploy it publicly without independent threat modeling.
+The hosted workflow on GitHub Actions completed successfully on commit `1e752727522eb146e9da7bbeed140b9f4423f97b` on 7 November 2026. Further commits trigger new runs; always inspect the newest run before relying on a green status.
 
-## Files
+[See GitHub Actions runs](https://github.com/mandlikvs/node-ci-failure-lab/actions)
 
-- `.github/workflows/ci.yml`: minimal-permission Node 24 test job
-- `src/`: sample implementations
-- `test/`: Node native automated tests
-- `scripts/preflight.mjs`: environment and lockfile preflight
+## Important limitations
 
-The `isWithinDirectory` example provides only lexical path containment; it does not defend against symlinks or filesystem races.
+- The `POST /estimate` endpoint is for demonstrating JSON validation and deterministic tests, **not** for handling real financial transactions or billing.
+- `isWithinDirectory` checks lexical path containment, not symlinks or filesystem race conditions.
+- `GET /ready` is an injected teaching example, not a full production readiness implementation.
+- Do not expose the educational local server publicly without adding a production security model.
 
-## License and rights
+## License
 
-The final source-code license must be selected and signed off by the publisher before the repository is made public. No license is granted by this draft staging package. The KDP eBook is not included in this repository.
+The sample companion code is distributed under the [MIT License](LICENSE). This license applies to source code in this repository; it does not grant redistribution rights to the separately sold eBook.
